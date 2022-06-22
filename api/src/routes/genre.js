@@ -13,7 +13,7 @@ route.get("/", async (req, res) => {
       var aux = await axios.get(
         `https://api.rawg.io/api/genres?key=${API_KEY}`
       );
-      
+
       var respuesta = aux.data.results.map((e) => {
         return e.name;
       });
@@ -32,6 +32,6 @@ route.get("/", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-});
+}); //TERMINADO
 
 module.exports = route;
