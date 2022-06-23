@@ -8,7 +8,7 @@ const { API_KEY } = process.env;
 
 route.get("/", async (req, res, next) => {
   try {
-    if (!req.query) {
+    if (Object.keys(req.query).length === 0) {
       var resultado = [];
 
       const videogamesBd = await Videogame.findAll({
@@ -33,6 +33,8 @@ route.get("/", async (req, res, next) => {
         .then((e) => {
           resultado = [...resultado, ...e.data.results]; //100
           resultado = [...videogamesBd, ...resultado];
+          console.log(typeof resultado[0].id);
+          console.log(typeof resultado[1].id);
           res.json(resultado);
         })
         .catch((err) => {
@@ -74,7 +76,7 @@ route.get("/", async (req, res) => {
     );
 
     if (cant > 0) {
-      var resultado = [...videogamesBd, ...aux.data.results];
+      var resultado = [...videogamesBd, ...resultado.data.results];
       res.json(resultado);
     } else if (videogamesBd.length === 0) {
       res.json(resultado);
@@ -85,12 +87,41 @@ route.get("/", async (req, res) => {
 }); //TERMINADO
 
 route.get("/videogame/:idVideoGame", async (req, res) => {
+  let { idVideoGame } = req.params;
 
-  
+  try {
+    const regex = /^[0-9]*$/;
 
+    if (regex.test(idVideoGame)) {
+      //Es un numero
+      var resultado = await axios.get(
+        `https://api.rawg.io/api/games/${idVideoGame}?key=${API_KEY}`
+      );
 
+      console.log(resultado.data);
+      res.json(resultado.data);
+    } else {
+      //No es un numero
 
-});
+      const videogamesBd = await Videogame.findAll({
+        where: {
+          id: idVideoGame,
+        },
+        include: {
+          model: Genero,
+          attributes: ["id", "name"],
+          through: { attributes: [] },
+        },
+      });
+
+      res.json(videogamesBd);
+    }
+  } catch (error) {
+
+    console.log(error.message);
+
+  }
+});//TERMINADO
 
 route.post("/", async (req, res) => {
   const { name, id, description, parent_plataform, genre } = req.body;
@@ -119,3 +150,5 @@ route.post("/", async (req, res) => {
 }); //TERMINADO
 
 module.exports = route;
+
+
