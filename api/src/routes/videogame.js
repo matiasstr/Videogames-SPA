@@ -2,12 +2,60 @@ const { Router } = require("express");
 const { Videogame, Genero } = require("../db");
 const route = Router();
 const axios = require("axios");
+const { Op } = require("sequelize");
 require("dotenv").config();
 const { API_KEY } = process.env;
 
+route.get("/", async (req, res, next) => {
+  try {
+    if (!req.query) {
+      var resultado = [];
+
+      const videogamesBd = await Videogame.findAll({
+        include: {
+          model: Genero,
+          attributes: ["id", "name"],
+          through: { attributes: [] },
+        },
+      });
+
+      axios
+        .get(`https://api.rawg.io/api/games?key=${API_KEY}&page_size=40`)
+        .then((e) => {
+          resultado = [...resultado, ...e.data.results]; //40
+          return axios.get(e.data.next);
+        })
+        .then((e) => {
+          resultado = [...resultado, ...e.data.results]; //80
+          e.data.next = e.data.next.replace("page_size=40", "page_size=20");
+          return axios.get(e.data.next);
+        })
+        .then((e) => {
+          resultado = [...resultado, ...e.data.results]; //100
+          resultado = [...videogamesBd, ...resultado];
+          res.json(resultado);
+        })
+        .catch((err) => {
+          console.log("hubo un error con la API", err);
+        });
+    } else {
+      next();
+    }
+  } catch (error) {
+    console.log("Hubo un error con la base de datos", error);
+  }
+}); //TERMINADO
+
 route.get("/", async (req, res) => {
+  let { name } = req.query;
+
   try {
     const videogamesBd = await Videogame.findAll({
+      where: {
+        name: {
+          [Op.substring]: `%${name}%`,
+        },
+      },
       include: {
         model: Genero,
         attributes: ["id", "name"],
@@ -15,121 +63,34 @@ route.get("/", async (req, res) => {
       },
     });
 
-    // var resultado=[];
+    let cant = 15 - videogamesBd.length;
 
-    // axios
-    //   .get(`https://api.rawg.io/api/games?key=${API_KEY}&page_size=5`)
-    //   .then((e) => {
-    //     console.log(e.data.results);
-    //     resultado.concat(e.data.results);
-    //     console.log(resultado);
-    //     axios.get(e.data.next)
+    if (cant <= 0) {
+      res.json(videogamesBd.slice(0, 16));
+    }
 
-    //     .then((e)=>{
-    //       resultado.concat(e.data.results);
-    //       console.log(resultado);
-    //       e.data.next.replace("page_size=40","page_size=20");
-    //       axios.get(e.data.next)
-
-    //       .then((e)=>{
-    //         resultado.concat(e.data.results);
-    //         console.log(resultado);
-    //       });
-    //     })
-
-    //   })
-    //   .then(()=>{
-        
-    //     return res.send(resultado)
-
-    //   })
-
-
-      // .then(async (e) => {
-      //   var get3 = await axios.get(e.data.next); //page 3
-      //   get3.data.results.concat(e.data.results);
-      //   return get3;
-      // })
-      // .then(async (e) => {
-      //   var get4 = await axios.get(e.data.next); //page 4
-      //   get4.data.results.concat(e.data.results);
-      //   return get4;
-      // })
-      // .then(async (e) => {
-      //   var get5 = await axios.get(e.data.next); //page 5
-      //   get5.data.results.concat(e.data.results);
-      //   return get5;
-      // });
-
-    // .then((e)=>{
-
-    //   var get5 = await axios.get(e.next) //page 6
-    //   get5.data.results.concat(e.results)
-    //   return get5;
-    // })
-
-    // const respuesta2 = await axios.get(
-    //   `https://api.rawg.io/api/games?key=${API_KEY}&page=2`
-    // );
-
-    // const respuesta3 = await axios.get(
-    //   `https://api.rawg.io/api/games?key=${API_KEY}&page=3`
-    // );
-
-    // const respuesta4 = await axios.get(
-    //   `https://api.rawg.io/api/games?key=${API_KEY}&page=4`
-    // );
-
-    // const respuesta5 = await axios.get(
-    //   `https://api.rawg.io/api/games?key=${API_KEY}&page=5`
-    // );
-
-    // var respuestaParseada = respuesta.data.results.map((e) => {
-    //   var aux = {};
-
-    //   aux.id = e.id;
-    //   aux.name = e.name;
-    //   aux.released = e.released;
-    //   aux.background_image = e.background_image;
-    //   aux.parent_platforms = e.parent_platforms;
-    //   aux.genre = e.genres;
-
-    //   return aux;
-    // });
-
-    // var respuestaFinal = [...videogamesBd, ...respuestaParseada];
-
-    // res.status(200).json(respuestaFinal);
-  } catch (error) {
-    console.log(error.message);
-  }
-});
-
-route.get("/", async (req, res) => {
-  try {
-    const respuesta = await axios.get(
-      `https://api.rawg.io/api/games?key=${API_KEY}`
+    var resultado = await axios.get(
+      `https://api.rawg.io/api/games?search=${name}&key=${API_KEY}&page_size=${cant}`
     );
 
-    var respuestaParseada = respuesta.data.results.map((e) => {
-      var aux = {};
-
-      aux.id = e.id;
-      aux.name = e.name;
-      aux.released = e.released;
-      aux.background_image = e.background_image;
-      aux.parent_platforms = e.parent_platforms;
-
-      return aux;
-    });
-
-    res.status(200).json(respuestaParseada);
+    if (cant > 0) {
+      var resultado = [...videogamesBd, ...aux.data.results];
+      res.json(resultado);
+    } else if (videogamesBd.length === 0) {
+      res.json(resultado);
+    }
   } catch (error) {
-    console.log(error);
+    console.log("Hubo un error con la base de datos", error);
   }
-});
+}); //TERMINADO
 
-route.get("/videogame/:idVideoGame", async (req, res) => {});
+route.get("/videogame/:idVideoGame", async (req, res) => {
+
+  
+
+
+
+});
 
 route.post("/", async (req, res) => {
   const { name, id, description, parent_plataform, genre } = req.body;
