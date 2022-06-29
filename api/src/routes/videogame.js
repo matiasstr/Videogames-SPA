@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Videogame, Genero } = require("../db");
+const { Videogame, Genre } = require("../db");
 const route = Router();
 const axios = require("axios");
 const { Op } = require("sequelize");
@@ -13,7 +13,7 @@ route.get("/", async (req, res, next) => {
 
       const videogamesBd = await Videogame.findAll({
         include: {
-          model: Genero,
+          model: Genre,
           attributes: ["id", "name"],
           through: { attributes: [] },
         },
@@ -59,7 +59,7 @@ route.get("/", async (req, res) => {
         },
       },
       include: {
-        model: Genero,
+        model: Genre,
         attributes: ["id", "name"],
         through: { attributes: [] },
       },
@@ -98,7 +98,6 @@ route.get("/videogame/:idVideoGame", async (req, res) => {
         `https://api.rawg.io/api/games/${idVideoGame}?key=${API_KEY}`
       );
 
-      console.log(resultado.data);
       res.json(resultado.data);
     } else {
       //No es un numero
@@ -108,7 +107,7 @@ route.get("/videogame/:idVideoGame", async (req, res) => {
           id: idVideoGame,
         },
         include: {
-          model: Genero,
+          model: Genre,
           attributes: ["id", "name"],
           through: { attributes: [] },
         },
@@ -117,30 +116,32 @@ route.get("/videogame/:idVideoGame", async (req, res) => {
       res.json(videogamesBd);
     }
   } catch (error) {
-
     console.log(error.message);
-
   }
-});//TERMINADO
+}); //TERMINADO
 
 route.post("/", async (req, res) => {
-  const { name, id, description, parent_plataform, genre } = req.body;
+  const { id, name, description, released, rating, genre, parent_plataform } =
+    req.body;
 
   try {
     var newGame = await Videogame.create({
-      name,
       id,
+      name,
       description,
+      released,
+      rating,
+      genre,
       parent_plataform,
     });
 
     genre.map(async (e) => {
-      var genero = await Genero.findAll({
+      var genre = await Genre.findAll({
         where: {
           name: e,
         },
       });
-      await newGame.addGenero(genero);
+      await newGame.addGenre(genre);
     });
 
     res.json(newGame);
@@ -150,5 +151,3 @@ route.post("/", async (req, res) => {
 }); //TERMINADO
 
 module.exports = route;
-
-

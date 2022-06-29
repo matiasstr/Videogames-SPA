@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Genero } = require("../db");
+const { Genre } = require("../db");
 const route = Router();
 const axios = require("axios");
 require("dotenv").config();
@@ -7,9 +7,9 @@ const { API_KEY } = process.env;
 
 route.get("/", async (req, res) => {
   try {
-    const genero = await Genero.findAll();
+    const genre = await Genre.findAll();
 
-    if (genero.length === 0) {
+    if (genre.length === 0) {
       var aux = await axios.get(
         `https://api.rawg.io/api/genres?key=${API_KEY}`
       );
@@ -19,15 +19,15 @@ route.get("/", async (req, res) => {
       });
 
       for (let i = 0; i < respuesta.length; i++) {
-        await Genero.create({
+        await Genre.create({
           name: respuesta[i],
         });
       }
 
-      const genero = await Genero.findAll();
-      res.json(genero);
+      const genre = await Genre.findAll();
+      res.json(genre);
     } else {
-      res.json(genero);
+      res.json(genre);
     }
   } catch (error) {
     console.log(error);

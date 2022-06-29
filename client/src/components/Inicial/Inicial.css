@@ -1,0 +1,15 @@
+.Inicial{
+
+    margin: 0;
+    width:100%;
+    height: 100%;
+    background-image: url('../../Img/letrero.jpg');
+    background-size: cover;
+   
+}
+
+.InicialButton {
+
+    margin: 0;
+}
+
