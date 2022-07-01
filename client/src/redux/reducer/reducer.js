@@ -10,21 +10,30 @@ import {
   FILTRO_AGREGADO,
   GET_GENRES,
   POST_VIDEOGAME,
-  FILTRO_EXISTENTES
+  FILTRO_EXISTENTES,
+  CLEAR
 } from "../actions/actions";
 
 const initialState = {
   games: [],
+  aux: [],
   gameDetail: [],
   genres: [],
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case CLEAR:
+      return {
+        ...state,
+        games: state.aux,
+
+      }
     case GET_ALL_VIDEOGAMES:
       return {
         ...state,
         games: action.payload,
+        aux : action.payload,
       };
     case GET_VIDEOGAMES:
       return {
@@ -48,8 +57,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         games: [action.payload, ...state.games],
       };
-  
-      
+
     case ORDER_ASC:
       return {
         ...state,
@@ -74,22 +82,49 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case FILTRO_GENERO:
-      return {
-        ...state,
-        games: [...action.payload],
-      };
+      console.log(state.aux.length);
+      console.log(state.games.length);
+
+      if (!action.payload.length) {
+        alert("No se encontraron coincidencias");
+        return {
+          ...state,
+          games : state.aux
+        };
+      } else {
+        return {
+          ...state,
+          games: [...action.payload],
+        };
+      }
 
     case FILTRO_AGREGADO:
-      return {
-        ...state,
-        games: [...action.payload],
-      };
+      if (!action.payload.length) {
+        alert("No se encontraron coincidencias");
+        return {
+          ...state,
+          games : state.aux
+        };
+      } else {
+        return {
+          ...state,
+          games: [...action.payload],
+        };
+      }
 
     case FILTRO_EXISTENTES:
-      return {
-        ...state,
-        games: [...action.payload],
-      };
+      if (!action.payload.length) {
+        alert("No se encontraron coincidencias");
+        return {
+          ...state,
+          games : state.aux
+        };
+      } else {
+        return {
+          ...state,
+          games: [...action.payload],
+        };
+      }
     default:
       return state;
   }

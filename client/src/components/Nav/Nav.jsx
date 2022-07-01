@@ -8,14 +8,24 @@ import {
   filtroGenero,
   filtroAgregado,
   filtroExistentes,
+  getGenres,
+  clear,
 } from "../../redux/actions/actions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import "../Nav/Nav.css";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   let dispatch = useDispatch();
   let videogames = useSelector((state) => state.games);
+  let genres = useSelector((state) => state.genres);
+  let [select, setSelect] = useState([]);
   let [nombre, setNombre] = useState("");
+
+  useEffect(() => {
+    dispatch(getGenres());
+  }, [dispatch]);
 
   const HandleSubmit = (e) => {
     if (nombre === "") {
@@ -47,9 +57,14 @@ const Nav = () => {
       }
     }
   };
-
+  const HandleClear = (e) => {
+    setSelect([]);
+    dispatch(clear());
+  };
   const comprobarFiltradoGenero = (e) => {
     dispatch(filtroGenero(videogames, e.target.value));
+    setSelect([e.target.value, ...select]);
+    console.log(select);
   };
 
   const comprobarFiltradoCrear = (e) => {
@@ -61,76 +76,102 @@ const Nav = () => {
   };
 
   return (
-    <div>
+    <div className="containerNav">
       <form onSubmit={HandleSubmit}>
-        <label>Busqueda</label>
+        <div className="formNav">
+          <div className="buscador">
+            <label>Busqueda</label>
+            <input
+              type="text"
+              value={nombre}
+              onChange={(e) => HandleChange(e)}
+            />
+            <input type="submit" value="Buscar" />
+          </div>
 
-        <input type="text" value={nombre} onChange={(e) => HandleChange(e)} />
+          <div className="ordenar">
+            <br></br>
+            <label>
+              <input
+                type="radio"
+                name="orden"
+                onChange={(e) => comprobarSeleccionado(e)}
+              />
+              Ordernar asc ABC
+            </label>
+            <br></br>
+            <label>
+              <input
+                type="radio"
+                name="orden"
+                onChange={(e) => comprobarSeleccionado(e)}
+              />
+              Ordernar dsc ABC
+            </label>
+            <br></br>
+            <label>
+              <input
+                type="radio"
+                name="orden"
+                onChange={(e) => comprobarSeleccionado(e)}
+              />
+              Ordernar dsc rating
+            </label>
+            <br></br>
+            <label>
+              <input
+                type="radio"
+                name="orden"
+                onChange={(e) => comprobarSeleccionado(e)}
+              />
+              Ordernar asc rating
+            </label>
+            <br></br>
+          </div>
 
-        <input
-          type="submit"
-          value="Buscar"
-          onClick={(e) => comprobarSeleccionado(e)}
-        />
-        <br></br>
-        <label>
-          <input type="radio" name="orden" />
-          Ordernar asc ABC
-        </label>
-        <br></br>
-        <label>
-          <input type="radio" name="orden" />
-          Ordernar dsc ABC
-        </label>
-        <br></br>
-        <label>
-          <input type="radio" name="orden" />
-          Ordernar dsc rating
-        </label>
-        <br></br>
-        <label>
-          <input type="radio" name="orden" />
-          Ordernar asc rating
-        </label>
-        <br></br>
+          <div className="Selects">
+            <div>
+              <select
+                name="FiltroGenero"
+                onChange={(e) => comprobarFiltradoGenero(e)}
+                defaultValue={"Default"}
+              >
+                <option value={"Default"}>Generos..</option>
 
-        <select
-          name="FiltroGenero"
-          onChange={(e) => comprobarFiltradoGenero(e)}
-        >
-          <option value=" " disabled>
-            Generos..
-          </option>
-          <option value="Indie">Indie</option>
-          <option value="Action">Action</option>
-          <option value="Adventure">Adventure</option>
-          <option value="RPG">RPG</option>
-          <option value="Strategy">Strategy</option>
-          <option value="Shooter">Shooter</option>
-          <option value="Casual">Casual</option>
-          <option value="Simulation">Simulation</option>
-          <option value="Puzzle">Puzzle</option>
-          <option value="Arcade">Arcade</option>
-          <option value="Platformer">Platformer</option>
-          <option value="Racing">Racing</option>
-          <option value="Massively Multiplayer">Massively Multiplayer</option>
-          <option value="Sports">Sports</option>
-          <option value="Fighting">Fighting</option>
-          <option value="Family">Family</option>
-          <option value="Board Games">Board Games</option>
-          <option value="Educational">Educational</option>
-          <option value="Card">Card</option>
-        </select>
+                {genres?.map((t) => (
+                  <option key={t.id} value={t.name}>
+                    {t.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-        <br></br>
-        <select name="FiltroApi/BD" onChange={(e) => comprobarFiltradoCrear(e)}>
-          <option value="" disabled>
-            Creados...
-          </option>
-          <option value="Creados">Creados</option>
-          <option value="Existentes">Existentes</option>
-        </select>
-        <br></br>
+            <br></br>
+
+            <div>
+              <select
+                name="FiltroApi/BD"
+                onChange={(e) => comprobarFiltradoCrear(e)}
+              >
+                <option value="">Creados...</option>
+                <option value="Creados">Creados</option>
+                <option value="Existentes">Existentes</option>
+              </select>
+            </div>
+          </div>
+
+          {select?.map((sel) => (
+            <div>{sel}</div>
+          ))}
+
+          <button onClick={(e) => HandleClear(e)}>Clear</button>
+          <p className="linkP">
+            <Link className="LinkNav" to={"/create"}>
+              Aca para Crear
+            </Link>
+          </p>
+          <br></br>
+        </div>
       </form>
     </div>
   );

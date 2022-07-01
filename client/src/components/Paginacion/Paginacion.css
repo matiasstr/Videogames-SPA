@@ -1,0 +1,14 @@
+.numbers{
+
+    color: rgb(255, 255, 255);
+}
+
+.paginacionConteiner{
+
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}

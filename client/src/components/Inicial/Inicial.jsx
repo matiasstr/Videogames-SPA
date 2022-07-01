@@ -7,8 +7,7 @@ const Inicial = () => {
   return (
     <div className='Inicial'>
       <div className='InicialButton'>
-        <Link to={'/home'}><button>Home</button></Link>
-        <h1>Henry Videogames</h1>
+        <Link to={'/home'}><button className='homeButton'>Home</button></Link>
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ export const FILTRO_AGREGADO = "FILTRO_AGREGADO";
 export const GET_GENRES = "GET_GENRES";
 export const POST_VIDEOGAME = "POST_VIDEOGAME";
 export const FILTRO_EXISTENTES = "FILTRO_EXISTENTES";
+export const CLEAR= "CLEAR";
 
 export const getAllvideogames = () => {
   return async function (dispatch) {
@@ -64,10 +65,16 @@ export const getVideogame = (id) => {
 export const postVideogame = (payload) => {
   return async function (dispatch) {
     let created = await axios.post("http://localhost:3001/videogames", payload);
-    console.log(created);
+    
     return dispatch({ type: POST_VIDEOGAME, payload: created.data });
   };
 };
+
+export const clear = ()=>{
+
+  return ({type: CLEAR})
+
+}
 
 export const orderASC = (array) => {
   let new_array = array.sort((a, b) => {
@@ -144,6 +151,7 @@ export const filtroGenero = (array, genre) => {
       }
     }
   });
+  
   return {
     type: FILTRO_GENERO,
     payload: new_arr,

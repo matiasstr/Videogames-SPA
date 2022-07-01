@@ -1,27 +1,27 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getGenres, postVideogame } from "../../redux/actions/actions";
-
+import { postVideogame, getGenres } from "../../redux/actions/actions";
 
 function validate(data) {
   let error = {};
   let regRating = new RegExp(/^[0-5]/);
-  let regCaracteresEspeciales =
-  new RegExp(/([@${}[<>,.:;#%^&()`~+=\*\]\-\.\'\"\\\/\|_])+/g);
+  let regCaracteresEspeciales = new RegExp(
+    /([@${}[<>,.:;#%^&()`~+=\*\]\-\.\'\"\\\/\|_])+/g
+  );
   let regPrimerLetraMayus = new RegExp(/^[A-Z]/);
-  let regRelease =
-  new RegExp(/[0-9]{0,2}-[0-9]{0,2}-[2]{1,1}[0]{1,1}[2-9]{1,1}[0-9]{1,1}$/);
+  let regRelease = new RegExp(
+    /[0-9]{0,2}-[0-9]{0,2}-[2]{1,1}[0]{1,1}[2-9]{1,1}[0-9]{1,1}$/
+  );
+
   if (!data.name) {
     error.name = "Falta ingresar un nombre";
   } else if (!regPrimerLetraMayus.test(data.name)) {
-    error.name = "La primer letra debe ser mayuscula" ;
+    error.name = "La primer letra debe ser mayuscula";
   } else if (regCaracteresEspeciales.test(data.name)) {
-    error.name= "Solo se permiten letras en el nombre";
-  }else if (data.name.length > 20) {
+    error.name = "Solo se permiten letras en el nombre";
+  } else if (data.name.length > 20) {
     error.name = "Excedido cantidad de caracteres";
-
-
   } else if (!data.description) {
     error.description = "Falta ingresar una descripcion";
   } else if (!data.released) {
@@ -45,7 +45,7 @@ const Create = () => {
   let dispatch = useDispatch();
   let genres = useSelector((state) => state.genres);
 
-  const [error, setError] = useState({" ":" "});
+  const [error, setError] = useState({ " ": " " });
   const [data, setData] = useState({
     name: " ",
     description: "",
@@ -55,10 +55,6 @@ const Create = () => {
     parent_plataform: [],
     background_image: " ",
   });
-
-  useEffect(() => {
-    dispatch(getGenres());
-  }, [dispatch]);
 
   const HandleInput = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -194,7 +190,11 @@ const Create = () => {
           <option value="Web">Web</option>
         </select>
         <br></br>
-        <input type="submit" value="Enviar" disabled={Object.keys(error).length}/>
+        <input
+          type="submit"
+          value="Enviar"
+          disabled={Object.keys(error).length}
+        />
       </form>
       <div>
         <h2>{error.name}</h2>

@@ -1,13 +1,15 @@
 import { getAllvideogames } from "../../redux/actions/actions";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import React from "react";
 import Cartas from "../Cartas/Cartas.jsx";
 import Nav from "../Nav/Nav.jsx";
 import Paginacion from "../Paginacion/Paginacion";
+import "../Home/Home.css";
 
 const Home = () => {
+  var flag = false;
   let dispatch = useDispatch();
   let videogames = useSelector((state) => state.games);
 
@@ -19,12 +21,31 @@ const Home = () => {
   useEffect(() => {
     dispatch(getAllvideogames());
   }, [dispatch]);
-  
-  return (
-    <div>
-      <Nav />
 
-      <Link to={'/create'}>Aca para Crear</Link>
+  
+  return videogames.length === 0 ? (
+    <div className="loading-screen">
+      <div class="loader">
+        <svg viewBox="0 0 80 80">
+          <circle id="test" cx="40" cy="40" r="32"></circle>
+        </svg>
+      </div>
+
+      <div class="loader triangle">
+        <svg viewBox="0 0 86 80">
+          <polygon points="43 8 79 72 7 72"></polygon>
+        </svg>
+      </div>
+
+      <div class="loader">
+        <svg viewBox="0 0 80 80">
+          <rect x="8" y="8" width="64" height="64"></rect>
+        </svg>
+      </div>
+    </div>
+  ) : (
+    <div className="juegosContainer">
+      <Nav />
 
       <div className="ListaJuegos">
         {videogames &&
@@ -34,11 +55,16 @@ const Home = () => {
               (pagina - 1) * porPagina + porPagina
             )
             .map((e, idx) => (
-              
-              <Cartas key={idx} videogames={e.name} genres={e.genres} background_image={e.background_image} id={e.id} />
+              <Cartas
+                key={idx}
+                videogames={e.name}
+                genres={e.genres}
+                background_image={e.background_image}
+                id={e.id}
+              />
             ))}
-        <Paginacion pagina={pagina} maximo={max} setPagina={setPagina} />
       </div>
+        <Paginacion pagina={pagina} maximo={max} setPagina={setPagina} />
     </div>
   );
 };

@@ -128,6 +128,7 @@ route.get("/videogame/:idVideoGame", async (req, res) => {
 }); //TERMINADO
 
 route.post("/", async (req, res) => {
+
   const { name, description, released, rating, genre, parent_plataform, background_image } =
     req.body;
 
@@ -144,11 +145,13 @@ route.post("/", async (req, res) => {
     });
 
     genre.map(async (e) => {
+
       var genre = await Genre.findAll({
         where: {
           name: e,
         },
       });
+      
       await newGame.addGenre(genre);
     });
 

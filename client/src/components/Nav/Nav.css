@@ -1,0 +1,44 @@
+.containerNav {
+  margin: 0;
+  padding-bottom: 10px;
+}
+
+.formNav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #f2295bd3;
+  border-bottom: 3px solid;
+  border-color: #f2295b2d
+}
+
+.divNav {
+  display: flex;
+  flex-direction: row;
+}
+
+.LinkNav {
+
+  text-transform: none;
+
+}
+
+
+.linkP {
+  text-transform: none;
+  font-size: large;
+  font-weight: bolder;
+  color: white;
+}
+
+.linkP:hover {
+  color: #f2295bf0 0.2em solid;
+}
+
+
+.Selects {
+  display: flex;
+  flex-direction: row;
+}
+
+
