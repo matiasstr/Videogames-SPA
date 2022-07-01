@@ -6,9 +6,10 @@ import {
   orderRatingASC,
   orderRatingDES,
   filtroGenero,
-  filtroExisteAgregado,
+  filtroAgregado,
+  filtroExistentes,
 } from "../../redux/actions/actions";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const Nav = () => {
@@ -52,7 +53,11 @@ const Nav = () => {
   };
 
   const comprobarFiltradoCrear = (e) => {
-    dispatch(filtroExisteAgregado(videogames));
+    if (e.target.value === "Creados") {
+      dispatch(filtroAgregado(videogames));
+    } else {
+      dispatch(filtroExistentes(videogames));
+    }
   };
 
   return (
@@ -80,12 +85,12 @@ const Nav = () => {
         <br></br>
         <label>
           <input type="radio" name="orden" />
-          Ordernar asc rating
+          Ordernar dsc rating
         </label>
         <br></br>
         <label>
           <input type="radio" name="orden" />
-          Ordernar dsc rating
+          Ordernar asc rating
         </label>
         <br></br>
 

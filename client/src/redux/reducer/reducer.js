@@ -7,16 +7,16 @@ import {
   ORDER_RATING_ASC,
   ORDER_RATING_DES,
   FILTRO_GENERO,
-  FILTRO_EXISTE_AGREGADO,
+  FILTRO_AGREGADO,
   GET_GENRES,
   POST_VIDEOGAME,
+  FILTRO_EXISTENTES
 } from "../actions/actions";
 
 const initialState = {
   games: [],
   gameDetail: [],
   genres: [],
-  post: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -46,7 +46,7 @@ const rootReducer = (state = initialState, action) => {
     case POST_VIDEOGAME:
       return {
         ...state,
-        games: [...action.payload, ...state.games],
+        games: [action.payload, ...state.games],
       };
   
       
@@ -79,7 +79,13 @@ const rootReducer = (state = initialState, action) => {
         games: [...action.payload],
       };
 
-    case FILTRO_EXISTE_AGREGADO:
+    case FILTRO_AGREGADO:
+      return {
+        ...state,
+        games: [...action.payload],
+      };
+
+    case FILTRO_EXISTENTES:
       return {
         ...state,
         games: [...action.payload],

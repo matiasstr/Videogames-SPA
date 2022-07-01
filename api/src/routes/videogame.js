@@ -20,14 +20,21 @@ route.get("/", async (req, res, next) => {
       });
 
       axios
-        .get(`https://api.rawg.io/api/games?key=${API_KEY}&page_size=40`)
+        .get(`https://api.rawg.io/api/games?key=${API_KEY}&page_size=20`)
+        .then((e) => {
+          resultado = [...resultado, ...e.data.results]; //20
+          return axios.get(e.data.next);
+        })
         .then((e) => {
           resultado = [...resultado, ...e.data.results]; //40
           return axios.get(e.data.next);
         })
         .then((e) => {
+          resultado = [...resultado, ...e.data.results]; //60
+          return axios.get(e.data.next);
+        })
+        .then((e) => {
           resultado = [...resultado, ...e.data.results]; //80
-          e.data.next = e.data.next.replace("page_size=40", "page_size=20");
           return axios.get(e.data.next);
         })
         .then((e) => {
@@ -112,8 +119,8 @@ route.get("/videogame/:idVideoGame", async (req, res) => {
           through: { attributes: [] },
         },
       });
-
-      res.json(videogamesBd);
+      console.log(videogamesBd)
+      res.json(videogamesBd[0]);
     }
   } catch (error) {
     console.log(error.message);
@@ -121,18 +128,19 @@ route.get("/videogame/:idVideoGame", async (req, res) => {
 }); //TERMINADO
 
 route.post("/", async (req, res) => {
-  const { id, name, description, released, rating, genre, parent_plataform } =
+  const { name, description, released, rating, genre, parent_plataform, background_image } =
     req.body;
 
   try {
     var newGame = await Videogame.create({
-      id,
       name,
       description,
       released,
       rating,
       genre,
       parent_plataform,
+      background_image
+      
     });
 
     genre.map(async (e) => {

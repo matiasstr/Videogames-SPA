@@ -13,7 +13,7 @@ function App() {
         <Route exact path={"/home"} component={Home} />
         <Route exact path={"/"} component={Inicial} />
         <Route exact path={"/videogame/:Idvideogame"} component={Carta} />
-        <Route exact Path={"/create"} element={<Create/>}/>
+        <Route exact path={"/create"} component={Create}/>
       </div>
     </BrowserRouter>
   );

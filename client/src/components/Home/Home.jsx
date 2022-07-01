@@ -19,12 +19,12 @@ const Home = () => {
   useEffect(() => {
     dispatch(getAllvideogames());
   }, [dispatch]);
-
+  
   return (
     <div>
       <Nav />
 
-      <Link to={'/videogames/create'}>Aca para Crear</Link>
+      <Link to={'/create'}>Aca para Crear</Link>
 
       <div className="ListaJuegos">
         {videogames &&
@@ -34,7 +34,8 @@ const Home = () => {
               (pagina - 1) * porPagina + porPagina
             )
             .map((e, idx) => (
-              <Cartas key={idx} videogames={e.name} genre={e.genre} id={e.id} />
+              
+              <Cartas key={idx} videogames={e.name} genres={e.genres} background_image={e.background_image} id={e.id} />
             ))}
         <Paginacion pagina={pagina} maximo={max} setPagina={setPagina} />
       </div>

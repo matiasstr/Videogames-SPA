@@ -8,9 +8,10 @@ export const ORDER_DES = "ORDER_DES";
 export const ORDER_RATING_ASC = "ORDER_RATING_ASC";
 export const ORDER_RATING_DES = "ORDER_RATING_DES";
 export const FILTRO_GENERO = "FILTRO_GENERO";
-export const FILTRO_EXISTE_AGREGADO = "FILTRO_EXISTE_AGREGADO";
+export const FILTRO_AGREGADO = "FILTRO_AGREGADO";
 export const GET_GENRES = "GET_GENRES";
 export const POST_VIDEOGAME = "POST_VIDEOGAME";
+export const FILTRO_EXISTENTES = "FILTRO_EXISTENTES";
 
 export const getAllvideogames = () => {
   return async function (dispatch) {
@@ -63,13 +64,13 @@ export const getVideogame = (id) => {
 export const postVideogame = (payload) => {
   return async function (dispatch) {
     let created = await axios.post("http://localhost:3001/videogames", payload);
-
+    console.log(created);
     return dispatch({ type: POST_VIDEOGAME, payload: created.data });
   };
 };
 
 export const orderASC = (array) => {
-  var new_array = array.sort((a, b) => {
+  let new_array = array.sort((a, b) => {
     if (a.name > b.name) {
       return 1;
     } else if (a.name < b.name) {
@@ -117,6 +118,7 @@ export const orderRatingASC = (array) => {
 };
 
 export const orderRatingDES = (array) => {
+  
   var new_array = array.sort((a, b) => {
     if (a.rating > b.rating) {
       return -1;
@@ -135,7 +137,7 @@ export const orderRatingDES = (array) => {
 export const filtroGenero = (array, genre) => {
   var new_arr = [];
 
-  var new_array = array.map((arr) => {
+  array.map((arr) => {
     for (let index = 0; index < arr.genres.length; index++) {
       if (arr.genres[index].name === genre) {
         new_arr.push(arr);
@@ -148,27 +150,28 @@ export const filtroGenero = (array, genre) => {
   };
 };
 
-export const filtroExisteAgregado = (array) => {
-  var new_array = array.filter((arr) => arr.hasOwnProperty("created"));
-
-  console.log(new_array);
+export const filtroAgregado = (array) => {
+  try {
+    var new_array = array.filter((arr) => arr.hasOwnProperty("created"));
+  } catch (error) {
+    console.log(error.message);
+  }
 
   return {
-    type: FILTRO_EXISTE_AGREGADO,
+    type: FILTRO_AGREGADO,
     payload: new_array,
   };
 };
 
-export const paginadoSiguiente = (array) => {
-  return {
-    type: FILTRO_EXISTE_AGREGADO,
-    payload: array,
-  };
-};
+export const filtroExistentes = (array) => {
+  try {
+    var new_array = array.filter((arr) => !arr.hasOwnProperty("created"));
+  } catch (error) {
+    console.log(error.message);
+  }
 
-export const paginadoAnterior = (array) => {
   return {
-    type: FILTRO_EXISTE_AGREGADO,
-    payload: array,
+    type: FILTRO_AGREGADO,
+    payload: new_array,
   };
 };
