@@ -79,58 +79,47 @@ const Nav = () => {
     <div className="containerNav">
       <form onSubmit={HandleSubmit}>
         <div className="formNav">
-          <div className="buscador">
-            <label>Busqueda</label>
-            <input
-              type="text"
-              value={nombre}
-              onChange={(e) => HandleChange(e)}
-            />
-            <input type="submit" value="Buscar" />
-          </div>
-
           <div className="ordenar">
-            <br></br>
-            <label>
-              <input
-                type="radio"
-                name="orden"
-                onChange={(e) => comprobarSeleccionado(e)}
-              />
-              Ordernar asc ABC
-            </label>
-            <br></br>
-            <label>
-              <input
-                type="radio"
-                name="orden"
-                onChange={(e) => comprobarSeleccionado(e)}
-              />
-              Ordernar dsc ABC
-            </label>
-            <br></br>
-            <label>
-              <input
-                type="radio"
-                name="orden"
-                onChange={(e) => comprobarSeleccionado(e)}
-              />
-              Ordernar dsc rating
-            </label>
-            <br></br>
-            <label>
-              <input
-                type="radio"
-                name="orden"
-                onChange={(e) => comprobarSeleccionado(e)}
-              />
-              Ordernar asc rating
-            </label>
-            <br></br>
+            <div className="ordenABC">
+              <div className="div-abc">
+                <input
+                  type="radio"
+                  name="orden"
+                  onChange={(e) => comprobarSeleccionado(e)}
+                />
+                ABC ˄
+              </div>
+              <div className="div-abc">
+                <input
+                  type="radio"
+                  name="orden"
+                  onChange={(e) => comprobarSeleccionado(e)}
+                />
+                ABC ˅
+              </div>
+            </div>
+            <div className="orderRating">
+              <div className="div-rating">
+                <input
+                  type="radio"
+                  name="orden"
+                  onChange={(e) => comprobarSeleccionado(e)}
+                />
+                Rating ˄
+              </div>
+              <div className="div-rating">
+                <input
+                  type="radio"
+                  name="orden"
+                  onChange={(e) => comprobarSeleccionado(e)}
+                />
+                Rating ˅
+              </div>
+            </div>
           </div>
 
           <div className="Selects">
-            <div>
+            <div className="select-genero">
               <select
                 name="FiltroGenero"
                 onChange={(e) => comprobarFiltradoGenero(e)}
@@ -146,9 +135,7 @@ const Nav = () => {
               </select>
             </div>
 
-            <br></br>
-
-            <div>
+            <div className="select-filtroapi">
               <select
                 name="FiltroApi/BD"
                 onChange={(e) => comprobarFiltradoCrear(e)}
@@ -158,19 +145,31 @@ const Nav = () => {
                 <option value="Existentes">Existentes</option>
               </select>
             </div>
+
+            <button className="clearbutton" onClick={(e) => HandleClear(e)}>
+              Clear
+            </button>
+          </div>
+          <div className="genero-elegido-conjuto">
+            {select?.map((sel) => (
+              <div className="genero-elegido-ind">{sel}</div>
+            ))}
+          </div>
+          <div className="cointeinerlink">
+            <a className="linkP" href="http://localhost:3000/create">
+              Postea tu juego !
+            </a>
           </div>
 
-          {select?.map((sel) => (
-            <div>{sel}</div>
-          ))}
-
-          <button onClick={(e) => HandleClear(e)}>Clear</button>
-          <p className="linkP">
-            <Link className="LinkNav" to={"/create"}>
-              Aca para Crear
-            </Link>
-          </p>
-          <br></br>
+          <div className="buscador">
+            <label>Busqueda</label>
+            <input
+              type="text"
+              value={nombre}
+              onChange={(e) => HandleChange(e)}
+            />
+            <input type="submit" value="Buscar" />
+          </div>
         </div>
       </form>
     </div>

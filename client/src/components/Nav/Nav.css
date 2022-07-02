@@ -6,10 +6,11 @@
 .formNav {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  background-color: #f2295bd3;
+  justify-content: space-around;
+  height: 70px;
+  background-color: #f2295bde;
   border-bottom: 3px solid;
-  border-color: #f2295b2d
+  border-color: #f2295b2d;
 }
 
 .divNav {
@@ -17,28 +18,113 @@
   flex-direction: row;
 }
 
-.LinkNav {
-
-  text-transform: none;
-
+.linkP {
+  display: inline-block;
+  padding: 0.9rem 1.8rem;
+  font-size: 16px;
+  font-weight: 700;
+  color: #2f3545;
+  /* border: 3px solid black; */
+  cursor: pointer;
+  position: relative;
+  background-color: #f2295b00;
+  text-decoration: none;
+  overflow: hidden;
+  z-index: 1;
+  font-family: inherit;
 }
 
+.linkP::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  transform: translateX(-100%);
+  transition: all 0.3s;
+  z-index: -1;
+}
 
-.linkP {
-  text-transform: none;
-  font-size: large;
-  font-weight: bolder;
-  color: white;
+.linkP:hover::before {
+  transform: translateX(0);
 }
 
 .linkP:hover {
-  color: #f2295bf0 0.2em solid;
+  color: black 0.2em solid;
 }
-
 
 .Selects {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
+.clearbutton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.genero-elegido-ind {
+  margin-right: 10px;
+}
 
+.genero-elegido-conjuto {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 20rem;
+  overflow: hidden;
+  white-space:initial;
+}
+
+.buscador {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.ordenar {
+  display: flex;
+  flex-direction: row;
+}
+
+.orderRating {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  margin-left: 30px;
+}
+
+.ordenABC {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  /* margin-left: 20px; */
+}
+
+.div-rating {
+  font-weight: bold;
+  color: #212121;
+}
+
+.div-abc {
+  font-weight: bold;
+  color: #212121;
+}
+.select-filtroapi {
+  margin: 10px;
+}
+.select-genero {
+  margin: 10px;
+}
+
+.cointeinerlink {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
