@@ -11,13 +11,14 @@ import {
   GET_GENRES,
   POST_VIDEOGAME,
   FILTRO_EXISTENTES,
-  CLEAR
+  CLEAR,
+  EMPTY_VIDEOGAME
 } from "../actions/actions";
 
 const initialState = {
   games: [],
   aux: [],
-  gameDetail: [],
+  gameDetail: {},
   genres: [],
 };
 
@@ -40,7 +41,16 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         games: action.payload,
       };
+
+    case EMPTY_VIDEOGAME:
+      var obj = {};
+
+      return {
+        ...state,
+        gameDetail: obj,
+      }
     case GET_VIDEOGAME:
+
       return {
         ...state,
         gameDetail: action.payload,
@@ -82,8 +92,6 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case FILTRO_GENERO:
-      console.log(state.aux.length);
-      console.log(state.games.length);
 
       if (!action.payload.length) {
         alert("No se encontraron coincidencias");

@@ -45,7 +45,7 @@ const Home = () => {
     </div>
   ) : (
     <div className="juegosContainer">
-      <Nav />
+      <Nav isHome={true}/>
 
       <div className="ListaJuegos">
         {videogames &&

@@ -1,13 +1,40 @@
 .containerNav {
   margin: 0;
   padding-bottom: 10px;
+  caret-color: transparent;
+  
+}
+.imgHome{
+
+  width: 50px;
+  height: 50px;
+
+}
+.formbusqueda{
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+
+}
+
+.formNavHome{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 70px;
+  background-color: #f2295bde;
+  border-bottom: 3px solid;
+  border-color: #f2295b2d;
+
 }
 
 .formNav {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
   height: 70px;
+  padding-left: 46px;
   background-color: #f2295bde;
   border-bottom: 3px solid;
   border-color: #f2295b2d;
@@ -55,6 +82,40 @@
   color: black 0.2em solid;
 }
 
+.selectgenero {
+  display: block;
+  font-size: 16px;
+  font-family: sans-serif;
+  font-weight: 400;
+  color: black;
+  height: 25px;
+
+  border-radius: 0.5em;
+  border-color: #f2295bde;
+  border-width: 1px;
+  background-color: #212121;
+  color: #f2295bde;
+
+  font-weight: bold;
+}
+
+.selectapi {
+  display: block;
+  font-size: 16px;
+  font-family: sans-serif;
+  font-weight: 400;
+  color: black;
+  height: 25px;
+
+  border-radius: 0.5em;
+  border-color: #f2295b9a;
+  border-width: 1px;
+  background-color: #212121;
+  color: #f2295bde;
+
+  font-weight: bold;
+}
+
 .Selects {
   display: flex;
   flex-direction: row;
@@ -62,28 +123,78 @@
 }
 
 .clearbutton {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  display: block;
+  font-size: 16px;
+  font-family: sans-serif;
+  font-weight: 400;
+  width: 60px;
+  height: 25px;
+  background-color: #212121;
+  color: #f2295bde;
+  border-color: #f2295bde;
+  border-width: 1px;
+  border-radius: 0.5em;
+
+  font-weight: bold;
 }
 .genero-elegido-ind {
   margin-right: 10px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .genero-elegido-conjuto {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  align-items: center;
   height: 100%;
   width: 20rem;
   overflow: hidden;
-  white-space:initial;
+  white-space: initial;
 }
 
-.buscador {
+.buscadorconteiner {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.buscador {
+  display: block;
+  font-size: 16px;
+  font-family: sans-serif;
+  font-weight: 400;
+  color: black;
+  width: 200px;
+  height: 25px;
+
+  border-radius: 0.5em;
+  border-color: #f2295b9a;
+  border-width: 1px;
+  background-color: #212121;
+  color: #f2295bde;
+
+  font-weight: bold;
+  outline: none;
+}
+
+.buscadorbutton {
+  display: block;
+  font-size: 16px;
+  font-family: sans-serif;
+  font-weight: 400;
+  color: black;
+  width: 70px;
+  height: 25px;
+
+  border-radius: 0.5em;
+  border-color: #f2295b9a;
+  border-width: 1px;
+  background-color: #212121;
+  color: #f2295bde;
+
+  font-weight: bold;
 }
 
 .ordenar {
@@ -95,6 +206,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  font-family: sans-serif;
+  font-weight: bold;
   justify-content: space-around;
   margin-left: 30px;
 }
@@ -103,6 +216,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  font-family: sans-serif;
+  font-weight: bold;
   justify-content: space-around;
   /* margin-left: 20px; */
 }
@@ -127,4 +242,8 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+input[type="radio"]:checked {
+  accent-color: #f2295bde;
 }

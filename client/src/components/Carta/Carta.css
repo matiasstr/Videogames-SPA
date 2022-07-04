@@ -1,0 +1,128 @@
+.cartacointeiner {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  align-items: center;
+  background-color: black;
+  width: 100%;
+}
+.cartanameconteiner{
+
+  width: 51%;
+  justify-content: flex-start;
+  
+
+}
+
+.cartaname {
+  font-size: 60px;
+  font-family: sans-serif;
+  font-weight: 400;
+  margin-bottom: 20px;
+  font-weight: bolder;
+  color: #f2295bde;
+}
+
+.cartaratingconteiner {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  margin-bottom: 50px;
+  padding-left: 10px;
+  border-left: 3px solid;
+  border-color: #f2295bde;
+}
+
+.cartarating {
+  align-items: flex-start;
+}
+
+.labelrating {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.cartaimgcontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.cartaimg {
+  width: 960px;
+  height: 550px;
+  border-radius: 1rem;
+  margin-bottom: 20px;
+}
+
+.conteiner-plataformas-genero {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  height: 41px;
+  /* padding-bottom: 20px; */
+}
+.cartaplataformasconteiner {
+  display: flex;
+  flex-direction: row;
+  width: 40%;
+  padding-left: 10px;
+  border-left: 3px solid;
+  border-color: #f2295bde;
+}
+.cartageneroconteiner {
+  display: flex;
+  flex-direction: row;
+  width: 40%;
+  padding-left: 10px;
+  border-left: 3px solid;
+  border-color: #f2295bde;
+}
+.cartanplataforma {
+  margin-left: 10px;
+}
+.cartagenero {
+  margin-left: 10px;
+}
+
+.labelgeneros {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+.label-genero {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.labelplataformas {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.label-plataforma {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.cartadescripcion {
+  width: 960px;
+  height: 550px;
+  padding-top: 10px;
+}
+.label-descripcion {
+  margin-bottom: 20px;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.cartalanzamiento {
+  padding-left: 10px;
+  border-left: 3px solid;
+  border-color: #f2295bde;
+}
+
+.label-lanzamiento {
+  font-family: sans-serif;
+  font-weight: bold;
+}

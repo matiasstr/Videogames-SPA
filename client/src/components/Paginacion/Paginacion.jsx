@@ -15,16 +15,20 @@ const Paginacion = ({ pagina, maximo, setPagina }) => {
       <button
         disabled={pagina === 1 || pagina < 0}
         onClick={() => HandleRetroceder()}
+        className="paginacionretroceder"
       >
         Retroceder
       </button>
+      <div className="numbersconteiner">
       <div className="numbers">
         {pagina}/{Math.ceil(maximo)}
+      </div>
       </div>
 
       <button
         disabled={pagina === Math.ceil(maximo) || pagina > Math.ceil(maximo)}
         onClick={() => HandleAvanzar()}
+        className="paginacionavanzar"
       >
         Avanzar
       </button>

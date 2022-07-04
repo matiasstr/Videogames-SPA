@@ -13,6 +13,7 @@ export const GET_GENRES = "GET_GENRES";
 export const POST_VIDEOGAME = "POST_VIDEOGAME";
 export const FILTRO_EXISTENTES = "FILTRO_EXISTENTES";
 export const CLEAR= "CLEAR";
+export const EMPTY_VIDEOGAME = "EMPTY_VIDEOGAME";
 
 export const getAllvideogames = () => {
   return async function (dispatch) {
@@ -61,6 +62,15 @@ export const getVideogame = (id) => {
       );
   };
 };
+
+export const empty_videogame =()=>{
+
+  return {
+    type: EMPTY_VIDEOGAME
+  }
+
+
+}
 
 export const postVideogame = (payload) => {
   return async function (dispatch) {

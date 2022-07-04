@@ -133,6 +133,9 @@ route.post("/", async (req, res) => {
     req.body;
 
   try {
+
+
+    console.log(parent_plataform)
     var newGame = await Videogame.create({
       name,
       description,
