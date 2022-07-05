@@ -13,11 +13,13 @@ import {
   FILTRO_EXISTENTES,
   CLEAR,
   EMPTY_VIDEOGAME,
+  FILTRADO_REVERSA,
 } from "../actions/actions";
 
 const initialState = {
   games: [],
   aux: [],
+  auxFil: [],
   gameDetail: {},
   genres: [],
 };
@@ -35,6 +37,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         games: action.payload,
         aux: action.payload,
+        auxFil: action.payload,
       };
     case GET_VIDEOGAMES:
       return {
@@ -87,6 +90,27 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         games: [...action.payload],
+      };
+
+    case FILTRADO_REVERSA:
+      var arrfilrado = state.auxFil;
+      var arraux = [];
+
+      for (let index = 0; index < action.payload.length; index++) {
+        arrfilrado.map((g) => {
+          for (let i = 0; i < g.genres.length; i++) {
+            if (g.genres[i].name === action.payload[index]) {
+              arraux = [...arraux, g];
+            }
+          }
+        });
+        arrfilrado = [...arraux];
+        arraux = [];
+      }
+
+      return {
+        ...state,
+        games: arrfilrado,
       };
 
     case FILTRO_GENERO:

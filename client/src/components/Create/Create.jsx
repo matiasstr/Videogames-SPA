@@ -85,8 +85,7 @@ const Create = () => {
         data.background_image = joystick;
       }
       
-      //dispatch(postVideogame(data));
-      console.log(data)
+      dispatch(postVideogame(data));
       alert("Juego creado");
       setData({
         name: " ",

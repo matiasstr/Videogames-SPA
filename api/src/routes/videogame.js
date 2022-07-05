@@ -19,6 +19,8 @@ route.get("/", async (req, res, next) => {
         },
       });
 
+    
+
       axios
         .get(`https://api.rawg.io/api/games?key=${API_KEY}&page_size=20`)
         .then((e) => {

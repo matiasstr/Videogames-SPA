@@ -148,7 +148,6 @@ export const orderRatingDES = (array) => {
 
 export const filtroGenero = (array, genre) => {
   var new_arr = [];
-
   array.map((arr) => {
     for (let index = 0; index < arr.genres.length; index++) {
       if (arr.genres[index].name === genre) {
@@ -163,15 +162,15 @@ export const filtroGenero = (array, genre) => {
   };
 };
 
-// export const filtradoreversagenero = ()=>{
+export const filtradoreversagenero = (arrFil)=>{
 
-//   return {
+  return {
 
-//     type: FILTRADO_REVERSA,
+    type: FILTRADO_REVERSA,
+    payload: arrFil
+  }
 
-//   }
-
-// }
+}
 
 export const filtroAgregado = (array) => {
   try {
@@ -194,7 +193,7 @@ export const filtroExistentes = (array) => {
   }
 
   return {
-    type: FILTRO_AGREGADO,
+    type: FILTRO_EXISTENTES,
     payload: new_array,
   };
 };

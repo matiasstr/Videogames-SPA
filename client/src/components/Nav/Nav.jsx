@@ -10,6 +10,7 @@ import {
   filtroExistentes,
   getGenres,
   clear,
+  filtradoreversagenero,
 } from "../../redux/actions/actions";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +24,7 @@ const Nav = ({ isHome, setPagina }) => {
   let genres = useSelector((state) => state.genres);
 
   let [generos, setgeneros] = useState([]);
-  let [api, setapi] = useState([])
+  let [api, setapi] = useState([]);
   let [nombre, setNombre] = useState("");
 
   useEffect(() => {
@@ -66,18 +67,22 @@ const Nav = ({ isHome, setPagina }) => {
     dispatch(clear());
   };
 
-
   const HandleEliminarGenero = (g) => {
-    var arraux = generos.filter((genero) => genero !== g);
+    if (generos.length === 1) {
+      setgeneros([]);
+      dispatch(clear());
+    } else {
+      var arraux = generos.filter((genero) => genero !== g);
 
-    setgeneros(arraux);
+      setgeneros(arraux);
+      dispatch(filtradoreversagenero(arraux));
+    }
   };
 
   const HandleEliminarPlatform = (p) => {
     var arraux = api.filter((platfor) => platfor !== p);
 
     setapi(arraux);
-    
   };
 
   const comprobarFiltradoGenero = (e) => {
@@ -85,7 +90,7 @@ const Nav = ({ isHome, setPagina }) => {
 
     dispatch(filtroGenero(videogames, e.target.value));
 
-    let arrsetgenero = [...new Set([e.target.value, ...generos])]
+    let arrsetgenero = [...new Set([e.target.value, ...generos])];
 
     setgeneros(arrsetgenero);
   };
@@ -99,10 +104,9 @@ const Nav = ({ isHome, setPagina }) => {
       dispatch(filtroExistentes(videogames));
     }
 
-    let arrsetapi = [...new Set([e.target.value, ...api])]
+    let arrsetapi = [...new Set([e.target.value, ...api])];
 
-    setapi(arrsetapi)
-
+    setapi(arrsetapi);
   };
 
   return (
@@ -189,16 +193,25 @@ const Nav = ({ isHome, setPagina }) => {
             <div className="conteinerselects">
               <div className="genero-elegido-conjuto">
                 {generos?.map((gen) => (
-                  <div onClick={()=>HandleEliminarGenero(gen)} className="genero-elegido-ind">{gen}</div>
+                  <div
+                    onClick={() => HandleEliminarGenero(gen)}
+                    className="genero-elegido-ind"
+                  >
+                    {gen}
+                  </div>
                 ))}
               </div>
               <div className="genero-elegido-conjuto">
                 {api?.map((a) => (
-                  <div onClick={()=>HandleEliminarPlatform(a)} className="genero-elegido-ind">{a}</div>
+                  <div
+                    onClick={() => HandleEliminarPlatform(a)}
+                    className="genero-elegido-ind"
+                  >
+                    {a}
+                  </div>
                 ))}
               </div>
             </div>
-
 
             <div className="cointeinerlink">
               <a className="linkP" href="http://localhost:3000/create">
