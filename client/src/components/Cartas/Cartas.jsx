@@ -16,7 +16,7 @@ const Cartas = ({ videogames, genres, background_image, id }) => {
         <div className="generos">
           {genres &&
             genres?.map((e) => {
-              return <h4>{e.name}</h4>;
+              return <h4 key={e.id}>{e.name}</h4>;
             })}
         </div>
       </div>

@@ -30,7 +30,7 @@ const Carta = (props) => {
 
   return Object.keys(gameDetail).length === 0 ? (
     <div className="loader-carta-Conteiner">
-      <div class="loaderCarta"></div>
+      <div className="loaderCarta"></div>
     </div>
   ) : (
     <>

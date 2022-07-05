@@ -65,12 +65,31 @@ const Nav = ({ isHome, setPagina }) => {
     setgeneros([]);
     setapi([]);
     dispatch(clear());
+    var orden = document.getElementsByName("orden");
+    var filtrogenero = document.getElementsByName("FiltroGenero");
+    var filtroapi = document.getElementsByName("FiltroApi/BD");
+
+    filtrogenero[0].selectedIndex = 0;
+    filtroapi[0].selectedIndex = 0;
+
+    for (var contador1 = 0; contador1 < orden.length; contador1++) {
+      if (orden[contador1].checked === true && contador1 === 0) {
+        orden[contador1].checked = false;
+      } else if (orden[contador1].checked === true && contador1 === 1) {
+        orden[contador1].checked = false;
+      } else if (orden[contador1].checked === true && contador1 === 2) {
+        orden[contador1].checked = false;
+      } else if (orden[contador1].checked === true && contador1 === 3) {
+        orden[contador1].checked = false;
+      }
+    }
   };
 
   const HandleEliminarGenero = (g) => {
     if (generos.length === 1) {
       setgeneros([]);
       dispatch(clear());
+      HandleClear();
     } else {
       var arraux = generos.filter((genero) => genero !== g);
 
@@ -196,6 +215,7 @@ const Nav = ({ isHome, setPagina }) => {
                   <div
                     onClick={() => HandleEliminarGenero(gen)}
                     className="genero-elegido-ind"
+                    
                   >
                     {gen}
                   </div>
