@@ -2,6 +2,7 @@ import React from "react";
 import "../Paginacion/Paginacion.css";
 
 const Paginacion = ({ pagina, maximo, setPagina }) => {
+  
   const HandleRetroceder = () => {
     setPagina(pagina - 1);
   };

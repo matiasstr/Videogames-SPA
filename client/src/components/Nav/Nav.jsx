@@ -17,11 +17,13 @@ import "../Nav/Nav.css";
 import js from "../../Img/pngjoystick.png";
 import { Link } from "react-router-dom";
 
-const Nav = (isHome) => {
+const Nav = ({ isHome, setPagina }) => {
   let dispatch = useDispatch();
   let videogames = useSelector((state) => state.games);
   let genres = useSelector((state) => state.genres);
-  let [select, setSelect] = useState([]);
+
+  let [generos, setgeneros] = useState([]);
+  let [api, setapi] = useState([])
   let [nombre, setNombre] = useState("");
 
   useEffect(() => {
@@ -59,32 +61,57 @@ const Nav = (isHome) => {
     }
   };
   const HandleClear = (e) => {
-    setSelect([]);
+    setgeneros([]);
+    setapi([]);
     dispatch(clear());
   };
+
+
+  const HandleEliminarGenero = (g) => {
+    var arraux = generos.filter((genero) => genero !== g);
+
+    setgeneros(arraux);
+  };
+
+  const HandleEliminarPlatform = (p) => {
+    var arraux = api.filter((platfor) => platfor !== p);
+
+    setapi(arraux);
+    
+  };
+
   const comprobarFiltradoGenero = (e) => {
+    setPagina(1);
+
     dispatch(filtroGenero(videogames, e.target.value));
-    setSelect([e.target.value, ...select]);
-    console.log(select);
+
+    let arrsetgenero = [...new Set([e.target.value, ...generos])]
+
+    setgeneros(arrsetgenero);
   };
 
   const comprobarFiltradoCrear = (e) => {
+    setPagina(1);
+
     if (e.target.value === "Creados") {
       dispatch(filtroAgregado(videogames));
     } else {
       dispatch(filtroExistentes(videogames));
     }
-  };
 
-  // console.log(isHome)
+    let arrsetapi = [...new Set([e.target.value, ...api])]
+
+    setapi(arrsetapi)
+
+  };
 
   return (
     <div className="containerNav">
-      <div className={isHome.isHome ? "formNavHome" :"formNav"}>
+      <div className={isHome ? "formNavHome" : "formNav"}>
         <Link to={"/home"}>
           <img className="imgHome" src={js} alt="img" />
         </Link>
-        {isHome.isHome && (
+        {isHome && (
           <>
             <div className="ordenar">
               <div className="ordenABC">
@@ -158,11 +185,21 @@ const Nav = (isHome) => {
                 Clear
               </button>
             </div>
-            <div className="genero-elegido-conjuto">
-              {select?.map((sel) => (
-                <div className="genero-elegido-ind">{sel}</div>
-              ))}
+
+            <div className="conteinerselects">
+              <div className="genero-elegido-conjuto">
+                {generos?.map((gen) => (
+                  <div onClick={()=>HandleEliminarGenero(gen)} className="genero-elegido-ind">{gen}</div>
+                ))}
+              </div>
+              <div className="genero-elegido-conjuto">
+                {api?.map((a) => (
+                  <div onClick={()=>HandleEliminarPlatform(a)} className="genero-elegido-ind">{a}</div>
+                ))}
+              </div>
             </div>
+
+
             <div className="cointeinerlink">
               <a className="linkP" href="http://localhost:3000/create">
                 Postea tu juego !

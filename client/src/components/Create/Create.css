@@ -1,4 +1,3 @@
-
 .imgconteinercreate {
   height: 100%;
   width: 100%;
@@ -7,6 +6,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  height: 800px;
 }
 
 .conteinerizq {
@@ -22,7 +22,6 @@
   height: 400px;
 }
 
-
 .label {
   font-size: 25px;
   font-family: sans-serif;
@@ -32,7 +31,6 @@
   color: #f2295bde;
   margin: 0;
 }
-
 
 .inputconteiner {
   display: block;
@@ -51,6 +49,25 @@
 
   font-weight: bold;
   outline: none;
+}
+
+.textareaconteiner {
+  display: block;
+  font-size: 16px;
+  font-family: sans-serif;
+  font-weight: 400;
+  color: black;
+  width: 300px;
+
+  border-radius: 0.5em;
+  border-color: #f2295b9a;
+  border-width: 1px;
+  background-color: #212121;
+  color: #f2295bde;
+
+  font-weight: bold;
+  outline: none;
+  resize: none;
 }
 
 .descripcionconteiner {
@@ -78,6 +95,7 @@
   font-family: sans-serif;
   font-weight: bold;
   padding-top: 20px;
+  color: #f2295bde;
 }
 
 .generosconteiner {
@@ -139,25 +157,65 @@
 
   font-weight: bold;
 }
+.buttonform:hover {
 
-.erroresconteiner{
-    color: #f2295bde;
-    padding-top: 20px;
+  cursor: pointer
+
+
+}
+
+
+.buttonformdisabled{
+  display: none;
+  
+  
+}
+.conteinerbutton{
+
+  height: 30px;
+}
+
+.erroresconteiner {
+  color: #f2295bde;
+  height: 50px;
+  padding-top: 20px;
+}
+
+.imgpreview {
+  font-size: 25px;
+  font-family: sans-serif;
+  font-weight: bold;
+  padding-top: 20px;
+  color: #f2295bde;
+}
+.imgconteinercreate {
+  margin-top: 20px;
+  width: 350px;
+  height: 350px;
+}
+
+.generoindividual{
+  display: block;
+  font-size: 16px;
+  font-family: sans-serif;
+  font-weight: bold;
+  
+  color: #f2295bde;
+
+  margin-left: 10px;
+  outline: none;
+}
+.generoindividualconteiner{
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  outline-style: none;
 
 }
 
-.imgpreview{
+.generoindividualconteiner:hover {
 
-    font-size: 25px;
-    font-family: sans-serif;
-    font-weight: bold;
-    padding-top: 20px;
-    color: #f2295bde;
+  cursor: pointer;
 
-}
-.imgconteinercreate{
-
-    margin-top: 20px;
-    width: 350px;
-    height: 350px;
 }

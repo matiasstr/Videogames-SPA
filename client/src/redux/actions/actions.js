@@ -12,8 +12,9 @@ export const FILTRO_AGREGADO = "FILTRO_AGREGADO";
 export const GET_GENRES = "GET_GENRES";
 export const POST_VIDEOGAME = "POST_VIDEOGAME";
 export const FILTRO_EXISTENTES = "FILTRO_EXISTENTES";
-export const CLEAR= "CLEAR";
+export const CLEAR = "CLEAR";
 export const EMPTY_VIDEOGAME = "EMPTY_VIDEOGAME";
+export const FILTRADO_REVERSA = "FILTRADO_REVERSA";
 
 export const getAllvideogames = () => {
   return async function (dispatch) {
@@ -63,28 +64,23 @@ export const getVideogame = (id) => {
   };
 };
 
-export const empty_videogame =()=>{
-
+export const empty_videogame = () => {
   return {
-    type: EMPTY_VIDEOGAME
-  }
-
-
-}
+    type: EMPTY_VIDEOGAME,
+  };
+};
 
 export const postVideogame = (payload) => {
   return async function (dispatch) {
     let created = await axios.post("http://localhost:3001/videogames", payload);
-    
+
     return dispatch({ type: POST_VIDEOGAME, payload: created.data });
   };
 };
 
-export const clear = ()=>{
-
-  return ({type: CLEAR})
-
-}
+export const clear = () => {
+  return { type: CLEAR };
+};
 
 export const orderASC = (array) => {
   let new_array = array.sort((a, b) => {
@@ -135,7 +131,6 @@ export const orderRatingASC = (array) => {
 };
 
 export const orderRatingDES = (array) => {
-  
   var new_array = array.sort((a, b) => {
     if (a.rating > b.rating) {
       return -1;
@@ -161,12 +156,22 @@ export const filtroGenero = (array, genre) => {
       }
     }
   });
-  
+
   return {
     type: FILTRO_GENERO,
     payload: new_arr,
   };
 };
+
+// export const filtradoreversagenero = ()=>{
+
+//   return {
+
+//     type: FILTRADO_REVERSA,
+
+//   }
+
+// }
 
 export const filtroAgregado = (array) => {
   try {

@@ -9,12 +9,13 @@ import Paginacion from "../Paginacion/Paginacion";
 import "../Home/Home.css";
 
 const Home = () => {
-  var flag = false;
   let dispatch = useDispatch();
   let videogames = useSelector((state) => state.games);
 
   const [pagina, setPagina] = useState(1);
   const [porPagina, setporPagina] = useState(15);
+
+  
 
   const max = videogames.length / porPagina;
 
@@ -45,7 +46,7 @@ const Home = () => {
     </div>
   ) : (
     <div className="juegosContainer">
-      <Nav isHome={true}/>
+      <Nav isHome={true}  setPagina={setPagina}/>
 
       <div className="ListaJuegos">
         {videogames &&

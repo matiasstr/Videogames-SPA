@@ -12,7 +12,7 @@ import {
   POST_VIDEOGAME,
   FILTRO_EXISTENTES,
   CLEAR,
-  EMPTY_VIDEOGAME
+  EMPTY_VIDEOGAME,
 } from "../actions/actions";
 
 const initialState = {
@@ -28,13 +28,13 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         games: state.aux,
+      };
 
-      }
     case GET_ALL_VIDEOGAMES:
       return {
         ...state,
         games: action.payload,
-        aux : action.payload,
+        aux: action.payload,
       };
     case GET_VIDEOGAMES:
       return {
@@ -48,9 +48,8 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         gameDetail: obj,
-      }
+      };
     case GET_VIDEOGAME:
-
       return {
         ...state,
         gameDetail: action.payload,
@@ -65,7 +64,6 @@ const rootReducer = (state = initialState, action) => {
     case POST_VIDEOGAME:
       return {
         ...state,
-        games: [action.payload, ...state.games],
       };
 
     case ORDER_ASC:
@@ -92,12 +90,11 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case FILTRO_GENERO:
-
       if (!action.payload.length) {
         alert("No se encontraron coincidencias");
         return {
           ...state,
-          games : state.aux
+          games: state.aux,
         };
       } else {
         return {
@@ -111,7 +108,7 @@ const rootReducer = (state = initialState, action) => {
         alert("No se encontraron coincidencias");
         return {
           ...state,
-          games : state.aux
+          games: state.aux,
         };
       } else {
         return {
@@ -125,7 +122,7 @@ const rootReducer = (state = initialState, action) => {
         alert("No se encontraron coincidencias");
         return {
           ...state,
-          games : state.aux
+          games: state.aux,
         };
       } else {
         return {

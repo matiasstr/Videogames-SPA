@@ -42,7 +42,7 @@ route.get("/", async (req, res, next) => {
           resultado = [...videogamesBd, ...resultado];
           console.log(typeof resultado[0].id);
           console.log(typeof resultado[1].id);
-          res.json(resultado);
+          res.status(200).json(resultado);
         })
         .catch((err) => {
           console.log("hubo un error con la API", err);
@@ -75,7 +75,7 @@ route.get("/", async (req, res) => {
     let cant = 15 - videogamesBd.length;
 
     if (cant <= 0) {
-      res.json(videogamesBd.slice(0, 16));
+      res.status(200).json(videogamesBd.slice(0, 16));
     }
 
     var resultado = await axios.get(
@@ -120,7 +120,7 @@ route.get("/videogame/:idVideoGame", async (req, res) => {
         },
       });
       console.log(videogamesBd)
-      res.json(videogamesBd[0]);
+      res.status(200).json(videogamesBd[0]);
     }
   } catch (error) {
     console.log(error.message);
@@ -135,7 +135,6 @@ route.post("/", async (req, res) => {
   try {
 
 
-    console.log(parent_plataform)
     var newGame = await Videogame.create({
       name,
       description,
@@ -158,9 +157,10 @@ route.post("/", async (req, res) => {
       await newGame.addGenre(genre);
     });
 
-    res.json(newGame);
+    res.status(200).json(newGame);
   } catch (error) {
-    res.send(error);
+    console.log(error.message)
+    res.send(error.message);
   }
 }); //TERMINADO
 

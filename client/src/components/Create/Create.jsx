@@ -38,14 +38,14 @@ function validate(data) {
   } else if (isNaN(data.rating)) {
     error.rating = "El rating debe ser un valor numerico";
   } else if (!regRating.test(data.rating)) {
-    console.log('entro aca')
+    console.log("entro aca");
     error.rating = "El rating debe ser un valor numerico entre 0 y 5";
   } else if (data.genre.length === 0) {
     error.genre = "Falta ingresar un genero";
   } else if (data.parent_plataform.length === 0) {
     error.parent_plataform = "Falta ingresar una plataforma";
   }
-  console.log(regRating.test(data.rating))
+
   return error;
 }
 
@@ -54,6 +54,7 @@ const Create = () => {
   let genres = useSelector((state) => state.genres);
 
   const [error, setError] = useState({ " ": " " });
+
   const [data, setData] = useState({
     name: " ",
     description: "",
@@ -83,7 +84,9 @@ const Create = () => {
       if (data.background_image.length < 30) {
         data.background_image = joystick;
       }
-      dispatch(postVideogame(data));
+      
+      //dispatch(postVideogame(data));
+      console.log(data)
       alert("Juego creado");
       setData({
         name: " ",
@@ -94,14 +97,43 @@ const Create = () => {
         parent_plataform: [],
         background_image: "",
       });
+
+      for (let i = 0; i < e.target.length - 1; i++) {
+        if (e.target[i].localName === "input") {
+          e.target[i].value = "";
+        } else if (e.target[i].localName === "textarea") {
+          e.target[i].value = "";
+        } else if (e.target[i].localName === "select") {
+          e.target[i].selectedIndex = 0;
+        }
+      }
     }
+  };
+
+  const HandleEliminarGenero = (g) => {
+    var arraux = data.genre.filter((genero) => genero !== g);
+
+    setData({
+      ...data,
+      genre: [...arraux],
+    });
+  };
+  const HandleEliminarPlatform = (p) => {
+    var arraux = data.parent_plataform.filter((platfor) => platfor !== p);
+
+    setData({
+      ...data,
+      parent_plataform: [...arraux],
+    });
   };
 
   const HandleChangePlatform = (e) => {
     if (e.target.value !== " ") {
+      let arrset = [...new Set([e.target.value, ...data.parent_plataform])]
+
       setData({
         ...data,
-        parent_plataform: [e.target.value, ...data.parent_plataform],
+        parent_plataform: arrset,
       });
       setError(
         validate({
@@ -111,12 +143,14 @@ const Create = () => {
       );
     }
   };
-
   const HandleChangeGeneros = (e) => {
     if (e.target.value !== " ") {
+
+      let arrset = [...new Set([e.target.value, ...data.genre])]
+      
       setData({
         ...data,
-        genre: [e.target.value, ...data.genre],
+        genre: arrset,
       });
       setError(
         validate({
@@ -126,7 +160,7 @@ const Create = () => {
       );
     }
   };
-  
+
   return (
     <div>
       <Nav isHome={false} />
@@ -148,12 +182,14 @@ const Create = () => {
 
             <div className="descripcionconteiner">
               <label className="label">Description:</label>
-              <input
+              <textarea
                 id="Description"
                 type="text"
                 name="description"
                 onChange={(e) => HandleInput(e)}
-                className="inputconteiner"
+                rows="5"
+                maxLength="140"
+                className="textareaconteiner"
               />
             </div>
 
@@ -168,7 +204,7 @@ const Create = () => {
               />
             </div>
             <div className="ratingconteiner">
-              <label className="label" >Rating:</label>
+              <label className="label">Rating:</label>
               <input
                 id="rating"
                 type="text"
@@ -225,15 +261,45 @@ const Create = () => {
                 <option value="Web">Web</option>
               </select>
             </div>
-            <div>
+            <div className="conteinerbutton">
               <input
                 type="submit"
                 value="Enviar"
                 disabled={Object.keys(error).length}
-                className="buttonform"
+                className={
+                  Object.keys(error).length
+                    ? "buttonformdisabled"
+                    : "buttonform"
+                }
               />
             </div>
           </form>
+          <div className="generoindividualconteiner">
+            {data.genre &&
+              data.genre.map((g) => {
+                return (
+                  <div
+                    className="generoindividual"
+                    onClick={() => HandleEliminarGenero(g)}
+                  >
+                    {g}
+                  </div>
+                );
+              })}
+          </div>
+          <div className="generoindividualconteiner">
+            {data.parent_plataform &&
+              data.parent_plataform.map((p) => {
+                return (
+                  <div
+                    className="generoindividual"
+                    onClick={() => HandleEliminarPlatform(p)}
+                  >
+                    {p}
+                  </div>
+                );
+              })}
+          </div>
           <div className="erroresconteiner">
             <h2>{error.name}</h2>
             <h2>{error.description}</h2>
@@ -245,6 +311,7 @@ const Create = () => {
         </div>
         <div className="conteinerDer">
           <div className="imgpreview">Image preview</div>
+
           {data.background_image.length === 0 ? (
             <>
               <img className="imgconteinercreate" src={joystick} alt="img" />
@@ -254,7 +321,7 @@ const Create = () => {
               <img
                 className="imgconteinercreate"
                 src={data.background_image}
-                alt="img"
+                alt="Debe ingresar una URL"
               />
             </>
           )}
